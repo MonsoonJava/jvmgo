@@ -17,6 +17,18 @@ func newOperandStack(maxStack uint) *OperAndStack {
 	return nil
 }
 
+func (oas *OperAndStack) PopSlot() Slot {
+	oas.size--
+	slot := oas.slots[oas.size]
+	return slot
+}
+
+func (oas *OperAndStack) PushSlot(slot Slot) {
+	oas.slots[oas.size] = slot
+	oas.size++
+}
+
+
 func (oas *OperAndStack) PushInt(val int32) {
 	oas.slots[oas.size].num = val
 	oas.size++
@@ -49,7 +61,7 @@ func (oas *OperAndStack) PopLong() int64 {
 	oas.size -= 2
 	low := uint32(oas.slots[oas.size].num)
 	high := uint32(oas.slots[oas.size+1].num)
-	longVal := int64(high)<<32 | int64(low)
+	longVal := int64(high) << 32 | int64(low)
 	return longVal
 }
 
